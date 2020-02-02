@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".notes.presentation.NoteActivity"></activity>
         <activity android:name=".notes.presentation.ListNotesActivity" />
         <activity
             android:name=".presentation.LoginActivity"

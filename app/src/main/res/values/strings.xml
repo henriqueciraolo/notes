@@ -3,12 +3,19 @@
     <string name="title_activity_login">Login</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
-    <string name="login_failed_title">Oh não…</string>
+    <string name="error_failed_title">Oh não…</string>
+    <string name="warning_delete_all_title">Deletar tudo?</string>
+    <string name="warning_delete_all">Você tem certeza que deseja deletar tudo? Essa ação não tem volta…</string>
     <string name="login_failed_fail_auth">Tem alguma coisa errada nesses dados. Verifique-os e tente novamente.</string>
     <string name="login_failed_fail_network">Tem alguma coisa errada na sua conexão. Verifique e tente novamente.</string>
-    <string name="action_ok">Ok</string>
+    <string name="load_notes_failed">Deu alguma coisa errada ao carregar os dados. Tente novamente mais tarde.</string>
+    <string name="action_ok">OK</string>
+    <string name="action_yes">Sim</string>
+    <string name="action_no">Não</string>
     <string name="action_sign_in">Entrar</string>
-    <string name="invalid_username">Ops... Esse email não parece muito bem um email...</string>
-    <string name="invalid_password">Ops... Essa senha não parece muito bem uma senha...</string>
+    <string name="invalid_username">Ops… Esse email não parece muito bem um email…</string>
+    <string name="invalid_password">Ops… Essa senha não parece muito bem uma senha…</string>
+    <string name="action_delete_all">Deletar tudo</string>
+    <string name="action_logout">Sair</string>
     <string name="switch_save_login">Salvar dados</string>
 </resources>
