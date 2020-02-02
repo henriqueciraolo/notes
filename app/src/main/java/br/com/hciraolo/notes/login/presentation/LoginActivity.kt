@@ -33,13 +33,11 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.getLoginStateLiveData().observe(this, Observer {
             when (it) {
                 LoginState.LOADING -> {
-                    binding.pbLoading.visibility = View.VISIBLE
-                    binding.btLogin.isEnabled = false
+                    binding.cnlLoadingLayout.visibility = View.VISIBLE
                 }
 
                 LoginState.NETWORK -> {
-                    binding.pbLoading.visibility = View.INVISIBLE
-                    binding.btLogin.isEnabled = true
+                    binding.cnlLoadingLayout.visibility = View.GONE
 
                     AlertDialog.Builder(this)
                         .setTitle(R.string.error_failed_title)
@@ -50,8 +48,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 LoginState.ERROR -> {
-                    binding.pbLoading.visibility = View.INVISIBLE
-                    binding.btLogin.isEnabled = true
+                    binding.cnlLoadingLayout.visibility = View.GONE
 
                     AlertDialog.Builder(this)
                         .setTitle(R.string.error_failed_title)
@@ -64,8 +61,7 @@ class LoginActivity : AppCompatActivity() {
                 LoginState.AUTHENTICATED -> {
                     loginViewModel.saveLogin(binding.tietUsername.text.toString(), binding.tietPassword.text.toString(), binding.swtSaveLogin.isChecked)
 
-                    binding.pbLoading.visibility = View.INVISIBLE
-                    binding.btLogin.isEnabled = true
+                    binding.cnlLoadingLayout.visibility = View.GONE
                     launchActivity<ListNotesActivity> {
                         this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     }
