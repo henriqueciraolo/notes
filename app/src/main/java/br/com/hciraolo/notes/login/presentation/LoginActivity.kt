@@ -7,6 +7,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import br.com.hciraolo.notes.R
@@ -131,5 +132,10 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginViewModel.getLoginData()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (loginViewModel.getLoginStateLiveData() as MutableLiveData).value = null
     }
 }
