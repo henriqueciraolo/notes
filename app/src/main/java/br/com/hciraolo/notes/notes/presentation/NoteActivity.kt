@@ -146,6 +146,8 @@ class NoteActivity : AppCompatActivity() {
                 }
             }
         })
+
+        binding.tietNotePriority.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_expand_more_black_24dp,0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
