@@ -10,10 +10,7 @@ import br.com.hciraolo.notes.login.presentation.data.LoginStateError
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
 
-class LoginModel private constructor() : LoginFormData {
-    companion object {
-        val instance = LoginModel()
-    }
+class LoginModel : LoginFormData {
 
     private val loginStateLiveData = MutableLiveData<LoginState>()
     private val loginInfoStateLiveData = MutableLiveData<LoginInfoState>()

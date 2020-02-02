@@ -4,6 +4,7 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import br.com.hciraolo.notes.ModelManager
 import br.com.hciraolo.notes.R
 import br.com.hciraolo.notes.login.business.LoginModel
 import br.com.hciraolo.notes.login.presentation.data.LoginFormState
@@ -16,10 +17,7 @@ class LoginViewModel : ViewModel() {
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
-    val login: LoginFormData
-    init {
-        login = LoginModel.instance
-    }
+    val login: LoginFormData = ModelManager().getLoginFormData()
 
     fun login(email: String, password: String) {
         login.login(email, password)

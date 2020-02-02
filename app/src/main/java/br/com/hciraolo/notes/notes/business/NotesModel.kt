@@ -10,12 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class NotesModel private constructor() :
-    ListNotesData, NoteFormData {
-
-    companion object {
-        val instance = NotesModel()
-    }
+class NotesModel : ListNotesData, NoteFormData {
 
     private val listNoteStateLiveData = MutableLiveData<ListNoteState>()
     private val noteStateLiveData = MutableLiveData<NoteState>()
@@ -165,7 +160,13 @@ class NotesModel private constructor() :
 
         GlobalScope.launch(context = Dispatchers.IO) {
             try {
-                val noteDto = NoteDto(null, note.title, note.shortDescription, note.description, note.priority)
+                val noteDto = NoteDto(
+                    null,
+                    note.title,
+                    note.shortDescription,
+                    note.description,
+                    note.priority
+                )
                 notesRepository.addNote(noteDto)
 
                 GlobalScope.launch(context = Dispatchers.Main) {
@@ -192,7 +193,13 @@ class NotesModel private constructor() :
 
         GlobalScope.launch(context = Dispatchers.IO) {
             try {
-                val noteDto = NoteDto(note.id, note.title, note.shortDescription, note.description, note.priority)
+                val noteDto = NoteDto(
+                    note.id,
+                    note.title,
+                    note.shortDescription,
+                    note.description,
+                    note.priority
+                )
                 notesRepository.editNote(noteDto)
 
                 GlobalScope.launch(context = Dispatchers.Main) {

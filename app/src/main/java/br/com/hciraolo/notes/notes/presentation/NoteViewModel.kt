@@ -3,6 +3,7 @@ package br.com.hciraolo.notes.notes.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import br.com.hciraolo.notes.ModelManager
 import br.com.hciraolo.notes.notes.business.NotesModel
 import br.com.hciraolo.notes.notes.presentation.data.Note
 import br.com.hciraolo.notes.notes.presentation.data.NoteFormData
@@ -15,10 +16,7 @@ class NoteViewModel : ViewModel() {
     private val _noteForm = MutableLiveData<NoteFormState>()
     val noteFormState: LiveData<NoteFormState> = _noteForm
 
-    val notes: NoteFormData
-    init {
-        notes = NotesModel.instance
-    }
+    val notes: NoteFormData = ModelManager().getNoteFormData()
 
     fun getNoteById(id: Int) {
         notes.getNoteById(id)
