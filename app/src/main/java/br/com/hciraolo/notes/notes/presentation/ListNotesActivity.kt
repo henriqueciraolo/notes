@@ -1,5 +1,6 @@
 package br.com.hciraolo.notes.notes.presentation
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,6 +23,10 @@ import br.com.hciraolo.notes.presentation.LoginActivity
 
 class ListNotesActivity : AppCompatActivity(), ListNotesViewHolder.OnItemTouchedListener,
     ListNotesRecyclerViewAdapter.OnItemDeletedListener {
+
+    companion object {
+        val NOTES_STACK = 1001
+    }
 
     lateinit var binding: ActivityListNotesBinding
     lateinit var listNotesViewModel: ListNotesViewModel
@@ -69,6 +74,10 @@ class ListNotesActivity : AppCompatActivity(), ListNotesViewHolder.OnItemTouched
             }
         })
 
+        binding.fabAddNote.setOnClickListener {
+            launchActivity<NoteActivity>(NOTES_STACK)
+        }
+
         listNotesViewModel.getAllNotes()
 
     }
@@ -111,11 +120,22 @@ class ListNotesActivity : AppCompatActivity(), ListNotesViewHolder.OnItemTouched
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == NOTES_STACK && resultCode == Activity.RESULT_OK) {
+            listNotesViewModel.getAllNotes()
+        }
+    }
+
     override fun onItemTouched(item: ListNote) {
-        Toast.makeText(this, "ITEM TOCADO!", Toast.LENGTH_SHORT).show()
+        val it = Intent(this, NoteActivity::class.java)
+        it.putExtra("id", item.id)
+        startActivityForResult(it, NOTES_STACK)
     }
 
     override fun onItemDeleted(item: ListNote) {
         listNotesViewModel.deleteNote(item)
     }
+
+
 }

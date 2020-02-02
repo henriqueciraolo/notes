@@ -123,15 +123,94 @@ class NotesModel private constructor() :
     }
 
     override fun getNoteById(id: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        noteStateLiveData.value = NoteState.LOADING
+
+        GlobalScope.launch(context = Dispatchers.IO) {
+            try {
+                val noteDto = notesRepository.getNoteById(id)
+
+                val note = Note(
+                    noteDto.id!!,
+                    noteDto.title!!,
+                    noteDto.shortDescription!!,
+                    noteDto.description!!,
+                    noteDto.priority!!
+                )
+
+                val noteState = NoteState.GETID
+                noteState.complement = NoteComplement(note, null)
+
+                GlobalScope.launch(context = Dispatchers.Main) {
+                    noteStateLiveData.value = noteState
+                }
+
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+                val noteState = NoteState.ERROR
+                noteState.complement =
+                    NoteComplement(
+                        null,
+                        ex
+                    )
+                GlobalScope.launch(context = Dispatchers.Main) {
+                    noteStateLiveData.value = noteState
+                }
+            }
+
+        }
     }
 
     override fun insertNote(note: Note) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        noteStateLiveData.value = NoteState.LOADING
+
+        GlobalScope.launch(context = Dispatchers.IO) {
+            try {
+                val noteDto = NoteDto(null, note.title, note.shortDescription, note.description, note.priority)
+                notesRepository.addNote(noteDto)
+
+                GlobalScope.launch(context = Dispatchers.Main) {
+                    noteStateLiveData.value = NoteState.CREATED
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+                val noteState = NoteState.ERROR
+                noteState.complement =
+                    NoteComplement(
+                        null,
+                        ex
+                    )
+                GlobalScope.launch(context = Dispatchers.Main) {
+                    noteStateLiveData.value = noteState
+                }
+            }
+        }
+
     }
 
     override fun editNote(note: Note) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        noteStateLiveData.value = NoteState.LOADING
+
+        GlobalScope.launch(context = Dispatchers.IO) {
+            try {
+                val noteDto = NoteDto(note.id, note.title, note.shortDescription, note.description, note.priority)
+                notesRepository.editNote(noteDto)
+
+                GlobalScope.launch(context = Dispatchers.Main) {
+                    noteStateLiveData.value = NoteState.EDITED
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+                val noteState = NoteState.ERROR
+                noteState.complement =
+                    NoteComplement(
+                        null,
+                        ex
+                    )
+                GlobalScope.launch(context = Dispatchers.Main) {
+                    noteStateLiveData.value = noteState
+                }
+            }
+        }
     }
 
 }

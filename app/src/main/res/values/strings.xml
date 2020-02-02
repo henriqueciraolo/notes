@@ -17,5 +17,21 @@
     <string name="invalid_password">Ops… Essa senha não parece muito bem uma senha…</string>
     <string name="action_delete_all">Deletar tudo</string>
     <string name="action_logout">Sair</string>
+    <string name="action_save">Salvar</string>
     <string name="switch_save_login">Salvar dados</string>
+    <string name="hint_title">Título</string>
+    <string name="hint_short_description">Resumo</string>
+    <string name="hint_description">Nota</string>
+    <string name="hint_priority">Prioridade</string>
+    <string name="menu_priority_highest">1 - Muito alta</string>
+    <string name="menu_priority_high">2 - Alta</string>
+    <string name="menu_priority_medium">3 - Média</string>
+    <string name="menu_priority_low">4 - Baixa</string>
+    <string name="menu_priority_lowest">5 - Muito baixa</string>
+    <string name="invalid_title">Ops… Esse título está em branco…</string>
+    <string name="invalid_short_desc">Ops… Esse resumo está em branco…</string>
+    <string name="invalid_description">Ops… Essa nota está em branco…</string>
+    <string name="success_title">Tudo certo!</string>
+    <string name="success_add_desc">Sua nota foi adicionada com sucesso!</string>
+    <string name="success_edit_desc">Sua nota foi editada com sucesso!</string>
 </resources>
