@@ -1,5 +1,6 @@
 package br.com.hciraolo.notes.presentation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,8 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import br.com.hciraolo.notes.R
 import br.com.hciraolo.notes.databinding.ActivityLoginBinding
 import br.com.hciraolo.notes.extensions.afterTextChanged
+import br.com.hciraolo.notes.extensions.launchActivity
 import br.com.hciraolo.notes.login.presentation.LoginViewModel
 import br.com.hciraolo.notes.login.presentation.data.LoginState
+import br.com.hciraolo.notes.notes.presentation.ListNotesActivity
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
@@ -23,10 +26,11 @@ class LoginActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        binding.viewModel = loginViewModel
 
 
-        loginViewModel.getLoginStateLiveData().observe(this, Observer { loginState ->
-            when (loginState) {
+        loginViewModel.getLoginStateLiveData().observe(this, Observer {
+            when (it) {
                 LoginState.LOADING -> {
                     binding.pbLoading.visibility = View.VISIBLE
                     binding.btLogin.isEnabled = false
@@ -37,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
                     binding.btLogin.isEnabled = true
 
                     AlertDialog.Builder(this)
-                        .setTitle(R.string.login_failed_title)
+                        .setTitle(R.string.error_failed_title)
                         .setMessage(R.string.login_failed_fail_network)
                         .setNeutralButton(R.string.action_ok, null)
                         .create()
@@ -49,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                     binding.btLogin.isEnabled = true
 
                     AlertDialog.Builder(this)
-                        .setTitle(R.string.login_failed_title)
+                        .setTitle(R.string.error_failed_title)
                         .setMessage(R.string.login_failed_fail_auth)
                         .setNeutralButton(R.string.action_ok, null)
                         .create()
@@ -57,12 +61,25 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 LoginState.AUTHENTICATED -> {
+                    loginViewModel.saveLogin(binding.tietUsername.text.toString(), binding.tietPassword.text.toString(), binding.swtSaveLogin.isChecked)
+
                     binding.pbLoading.visibility = View.INVISIBLE
                     binding.btLogin.isEnabled = true
+                    launchActivity<ListNotesActivity> {
+                        this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    }
                     finish()
                 }
             }
         } )
+
+        loginViewModel.getLoginInfoStateLiveData().observe(this, Observer {
+            if (it.saveLogin) {
+                binding.tietUsername.setText(it.username)
+                binding.tietPassword.setText(it.password)
+            }
+            binding.swtSaveLogin.isChecked = it.saveLogin
+        })
 
         loginViewModel.loginFormState.observe(this, Observer {
             val loginState = it ?: return@Observer
@@ -112,5 +129,7 @@ class LoginActivity : AppCompatActivity() {
                 loginViewModel.login(binding.tietUsername.text.toString(), binding.tietPassword.text.toString())
             }
         }
+
+        loginViewModel.getLoginData()
     }
 }

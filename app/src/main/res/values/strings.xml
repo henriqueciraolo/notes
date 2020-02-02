@@ -10,4 +10,5 @@
     <string name="action_sign_in">Entrar</string>
     <string name="invalid_username">Ops... Esse email não parece muito bem um email...</string>
     <string name="invalid_password">Ops... Essa senha não parece muito bem uma senha...</string>
+    <string name="switch_save_login">Salvar dados</string>
 </resources>

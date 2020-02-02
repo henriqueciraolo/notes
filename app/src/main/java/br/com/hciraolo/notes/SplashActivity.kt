@@ -1,10 +1,10 @@
-package br.com.hciraolo.notes.presentation
+package br.com.hciraolo.notes
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import br.com.hciraolo.notes.R
 import br.com.hciraolo.notes.extensions.launchActivity
+import br.com.hciraolo.notes.presentation.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
 

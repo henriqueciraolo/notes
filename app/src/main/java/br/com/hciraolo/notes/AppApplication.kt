@@ -14,10 +14,12 @@ class AppApplication : Application() {
             this,
             AppDatabase::class.java, "hciraolo-notas"
         ).build()*/
+        sharedPreferencesRepository = SharedPreferencesRepository(this)
     }
 
     companion object {
         var firebaseAuth: FirebaseAuth? = null
         /*var appDatabase: AppDatabase? = null*/
+        var sharedPreferencesRepository: SharedPreferencesRepository? = null
     }
 }

@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import br.com.hciraolo.notes.R
 import br.com.hciraolo.notes.login.business.LoginModel
 import br.com.hciraolo.notes.login.presentation.data.LoginFormState
+import br.com.hciraolo.notes.login.presentation.data.LoginInfoState
 import br.com.hciraolo.notes.login.presentation.data.LoginState
-import kotlin.math.log
 
 class LoginViewModel : ViewModel() {
 
@@ -29,6 +29,10 @@ class LoginViewModel : ViewModel() {
         return login.getLoginStateLiveData()
     }
 
+    fun getLoginInfoStateLiveData() : LiveData<LoginInfoState> {
+        return login.getLoginInfoStateLiveData()
+    }
+
     fun loginDataChanged(username: String, password: String) {
         if (!isUserNameValid(username)) {
             _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
@@ -37,6 +41,14 @@ class LoginViewModel : ViewModel() {
         } else {
             _loginForm.value = LoginFormState(isDataValid = true)
         }
+    }
+
+    fun saveLogin(username: String, password: String, save: Boolean) {
+        login.saveLogin(username, password, save)
+    }
+
+    fun getLoginData() {
+        login.getLogin()
     }
 
     // A placeholder username validation check
